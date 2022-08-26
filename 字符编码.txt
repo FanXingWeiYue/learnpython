@@ -1,0 +1,34 @@
+ASCII表:
+    1、支支持英文字符串
+    2、采用8位二进制对应一个英文字符串
+
+GBK表:
+    1、支持英文字符、中文字符
+    2、采用8位二进制(8bit=1Bytes)对应一个英文字符串
+       采用16位二进制(16bit=2Bytes)对应一个中文字符串
+
+unicode(内存中统一使用unicode):
+    1、兼容万国字符
+       与万国字符都有对应关系
+    2、采用16位二进制(16bit=2Bytes)对应一个字符串
+       个别生僻会采用4Bytes、8Bytes
+    老的字符编码都可以转换成unicode,但是不能通过unicode互转
+
+utf-8:(8-bit Unicode Transformation Format)
+    英文->1Bytes
+    汉字->3Bytes
+
+结论:
+   1、内存固定使用unicode,我们可以改变的是存入硬盘采用格式
+      英文+中文->unicode->gbk
+      英文+日文->unicode->shift-jis
+      万国字符->unicode->gbk
+
+   2、保证运行python程序前两个阶段不乱码的核心法则：
+      指定文件头
+      # coding:文件当初存入硬盘时所采用的编码格式
+
+   3、python3的str类型默认直接存成unicode格式，无论如何都不会乱码
+      保证python3的str类型不乱码
+          x=u'上'
+
