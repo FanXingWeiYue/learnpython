@@ -1,47 +1,33 @@
-from threading import Thread, Lock, RLock
+import os
 import time
+from threading import Thread, Lock
 
-'''
-Rlock锁 也被称之为递归锁
-第一个抢到Rlock锁的人,可以连续使用acquire,release
-每acquire一次,锁身上计数加1
-每release一次,锁身上计数减1
-等锁身上的计数为0时,其他人就可以抢锁
-'''
-# mutexA = Lock()
-# mutexB = Lock()
-mutexA = mutexB = RLock()
+# 锁必须在主进程中产生,交给子进程去使用
+"""
+注意:
+    1.锁不要轻易使用 容易造成死锁现象
+    2.只在处理数据的部分加锁不要再全局加锁
+"""
+money = 100
 
 
-class MyThead(Thread):
-    def run(self):  # 创建线程时,会自动执行run方法
-        self.func1()
-        self.func2()
-
-    def func1(self):
-        mutexA.acquire()
-        print('%s 抢到了A锁' % self.name)
-        mutexB.acquire()
-        print('%s 抢到了B锁' % self.name)
-        mutexB.release()
-        print('%s 释放了B锁' % self.name)
-        mutexA.release()
-        print('%s 释放了A锁' % self.name)
-
-    def func2(self):
-        mutexB.acquire()
-        print('%s 抢到了B锁' % self.name)
-        time.sleep(3)
-        mutexA.acquire()
-        print('%s 抢到了A锁' % self.name)
-        mutexA.release()
-        print('%s 释放了A锁' % self.name)
-        mutexB.release()
-        print('%s 释放了B锁' % self.name)
+def task(mutex):
+    global money  # 局部修改全局
+    mutex.acquire()
+    time.sleep(1)
+    money = money - 1
+    print('PID: %s money: %s' % (os.getpid(), money))
+    mutex.release()
 
 
-for i in range(10):
-    p = MyThead()
-    p.start()
+if __name__ == '__main__':
+    mutex = Lock()
+    p_list = []
+    for i in range(1, 4):
+        p = Thread(target=task, args=(mutex,))
+        p.start()
+        p_list.append(p)
+    for p in p_list:
+        p.join()
 
-# 自己千万不要轻易的处理锁的问题
+    print("主进程", money)
