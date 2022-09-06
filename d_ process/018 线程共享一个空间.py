@@ -2,12 +2,7 @@ import os
 import time
 from threading import Thread, Lock
 
-# 锁必须在主进程中产生,交给子进程去使用
-"""
-注意:
-    1.锁不要轻易使用 容易造成死锁现象
-    2.只在处理数据的部分加锁不要再全局加锁
-"""
+# 线程之间的资源是共享的
 money = 100
 
 
