@@ -8,7 +8,7 @@ with open("字符编码.txt", encoding="utf-8") as f:
         print(_, end="")
 
 # rb模式
-with open("字符编码.txt", mode="rb") as f:  # 注意:这里以二进制模式打开文件，就不需要指定编码模式了，下面要进行解码
+with open("字符编码.txt", mode="rb") as f:  # 注意:这里以二进制模式打开文件，就不需要指定编码模式了，但是下面要进行解码
     print(f.read(100).decode("utf-8"))
 
 # rt模式
