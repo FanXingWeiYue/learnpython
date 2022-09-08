@@ -5,8 +5,8 @@ import time
 
 def task(name, i):
     print('%s is running' % name)
-    # print('子current_thread:%s'%current_thread())
-    # print('子:%s' % os.getpid())
+    print('子{}: {}'.format(current_thread().getName(), current_thread().ident))
+    print('子进程:%s' % os.getpid())
 
     time.sleep(i)
     print('%s is over' % name)
@@ -20,5 +20,3 @@ if __name__ == '__main__':
     t1.start()
     t1.join()  # 主线程等待子线程运行完毕
     print(active_count())  # 查看当前活跃线程数
-    time.sleep(4)
-    print(active_count())
