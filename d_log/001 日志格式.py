@@ -31,7 +31,7 @@ import logging
 # %(threadName)s 线程名。可能没有
 # %(process)d 进程ID。可能没有
 # %(message)s用户输出的消息
-logging.basicConfig(filename='../access.log',
+logging.basicConfig(filename='./access.log',
                     format='%(asctime)s - %(name)s - %(levelname)s -%(module)s:  %(message)s',
                     datefmt='%Y-%m-%d %H:%M:%S %p',
                     level=10)
