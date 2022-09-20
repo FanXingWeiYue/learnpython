@@ -1,6 +1,9 @@
 li = [str(i) for i in range(10)]
 li.append(" ")
 print(li)
+with open("c.py", mode="w", encoding="utf-8") as writer:
+    writer.write("")
+
 with open("a.py", encoding="utf-8") as f:
     for str in f:
         for i in str:
